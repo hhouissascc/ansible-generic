@@ -4,21 +4,21 @@
   vars:
      pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
   tasks:
-  - name: "Ansible | Print a variable if defined"
-    debug:
-      msg: "The 'public key to deploy' variable value is {{ pubkey }}"
-    when: pubkey is defined
-  - name: make direcotry
-    file:
-      path: "/home/ansible/.ssh"
-      state: directory
-      mode: '0700'
-  - name: create empty file
-    file:
-      path: "/home/ansible/.ssh/authorized_keys"
-      state: touch
-      mode: '0644'
-  - name: put pubkey
-    lineinfile:
-      path: "/home/ansible/.ssh/authorized_keys"
-      line: "{{ pubkey }}"
+    - name: "Ansible | Print a variable if defined"
+      debug:
+        msg: "The 'public key to deploy' variable value is {{ pubkey }}"
+      when: pubkey is defined
+    - name: make direcotry
+      file:
+        path: "/home/ansible/.ssh"
+        state: directory
+        mode: '0700'
+    - name: create empty file
+      file:
+        path: "/home/ansible/.ssh/authorized_keys"
+        state: touch
+        mode: '0644'
+    - name: put pubkey
+      lineinfile:
+        path: "/home/ansible/.ssh/authorized_keys"
+        line: "{{ pubkey }}"
