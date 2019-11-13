@@ -1,8 +1,8 @@
-- hosts: rhel7-prod
-  tasks:
-    - name: test connection
-      ping:
-      remote_user: ansible
+##- hosts: rhel7-prod
+##  tasks:
+##    - name: test connection
+##      ping:
+##      remote_user: ansible
 
 - hosts: rhel7-prod
   gather_facts: false
