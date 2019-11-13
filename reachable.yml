@@ -1,0 +1,5 @@
+- hosts: rhel7-prod
+  tasks:
+    - name: test connection
+      ping:
+      remote_user: ansible
