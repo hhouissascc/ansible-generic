@@ -1,0 +1,28 @@
+- hosts: rhel7-prod
+  become: yes
+  tasks:
+    - name: Register as user (ansible_devops) with password (password) and auto-subscribe to available content.
+      redhat_subscription:
+        state: present
+        username: ansible_devops
+        password: ansible
+        auto_attach: true
+##
+##    - name: Enable all repositories starting with rhel-6-server
+##      rhsm_repository:
+##        name: rhel-6-server*
+##        state: enabled
+##
+    - name: Enable all optional repositories
+      rhsm_repository:
+        name: rhel-*-optional-rpms
+        state: enabled
+
+    - name: Enable all extras repositories
+      rhsm_repository:
+        name: rhel-*-extras-rpms
+        state: enabled
+    - name: Enable all ha repositories
+      rhsm_repository:
+        name: rhel-ha-for-rhel-*-server-rpms
+        state: enabled

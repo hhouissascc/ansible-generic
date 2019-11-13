@@ -1,0 +1,4 @@
+- hosts: rhel7-server 
+  become: yes
+  roles:
+    - { role: geerlingguy.docker }

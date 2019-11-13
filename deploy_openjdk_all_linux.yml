@@ -1,0 +1,5 @@
+---
+hosts: dbservers
+  become: true
+  roles:
+    - role: diodonfrost.java

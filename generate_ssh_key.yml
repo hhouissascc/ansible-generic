@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+##  become: yes
+##  vars:
+##    iuser: "{{ ansible_user_id }}"
+  tasks:
+    - name: "Ansible | Print a variable if defined"
+      debug:
+        msg: "The 'user we will create key pair for is' variable value is {{ ansible_user_id }}"
+
+    - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa)
+      openssh_keypair:
+        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa_auto"
+        owner: "{{ ansible_user_id }}"
+        group: wheel
+
+    - name: Fix owner of the generated pub key
+      file:
+        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa_auto.pub"
+        owner: "{{ ansible_user_id }}"
+        group: wheel

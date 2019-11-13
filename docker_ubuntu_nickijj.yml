@@ -1,0 +1,11 @@
+---
+
+# docker.yml
+
+- name: Install Docker from Role
+  hosts: "dbservers"
+  become: true
+
+  roles:
+    - role: "nickjj.docker"
+      tags: ["docker"]

@@ -1,0 +1,16 @@
+{
+  "name": "npm-ansibled",
+  "version": "1.0.0",
+  "description": "this is a new package created manually",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "test",
+    "manual",
+    "nodejs"
+  ],
+  "author": "Haythem Houissa",
+  "license": "ISC"
+}

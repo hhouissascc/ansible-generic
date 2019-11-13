@@ -1,0 +1,17 @@
+---
+- hosts: rhel7-server
+  become: true
+
+  vars:
+    nodejs_version: "10.17"
+    pip_install_packages:
+      - name: docker-py
+
+  roles:
+##    - geerlingguy.repo-epel
+##    - geerlingguy.git
+##    - geerlingguy.ansible
+##    - geerlingguy.docker
+##    - geerlingguy.pip
+##    - geerlingguy.nodejs
+    - geerlingguy.awx
