@@ -1,15 +1,9 @@
-##- hosts: rhel7-prod
-##  tasks:
-##    - name: test connection
-##      ping:
-##      remote_user: ansible
-
 - hosts: rhel7-prod
   gather_facts: false
   vars:
      pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
   tasks:
-  - name: "Ansible | Print a variable if defined"
+  - name: "Ansible  Print a variable if defined"
     debug:
       msg: "The 'public key to deploy' variable value is {{ pubkey }}"
     when: pubkey is defined
