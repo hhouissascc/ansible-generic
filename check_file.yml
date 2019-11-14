@@ -1,4 +1,4 @@
-- hosts: rhel7-prod
+- hosts: rhel7-server
   gather_facts: false
   vars:
      pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
