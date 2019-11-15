@@ -1,14 +1,15 @@
-- hosts: rhel7-prod
+- hosts: localhost
   gather_facts: true
-
+  vars:
+     pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
   tasks:
-  - name: importing the file contents to variable
-    slurp:
-      src: '/home/ansible/bogus.txt'
-    register: bogus_content
-
-  - set_fact:
-      pubkey: "{{ bogus_content.content }}"
+##  - name: importing the file contents to variable
+##    slurp:
+##      src: '/home/ansible/bogus.txt'
+##    register: bogus_content
+##
+##  - set_fact:
+##      pubkey: "{{ bogus_content.content }}"
 
   - name: "Ansible  Print a variable if defined"
     debug:

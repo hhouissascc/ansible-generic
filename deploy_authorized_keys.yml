@@ -1,24 +1,31 @@
 ---
 - hosts: rhel7-prod
-  gather_facts: false
-  vars:
-     pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+  gather_facts: true
+
   tasks:
-    - name: "Ansible | Print a variable if defined"
-      debug:
-        msg: "The 'public key to deploy' variable value is {{ pubkey }}"
-      when: pubkey is defined
-    - name: make direcotry
-      file:
-        path: "/home/ansible/.ssh"
-        state: directory
-        mode: '0700'
-    - name: create empty file
-      file:
-        path: "/home/ansible/.ssh/authorized_keys"
-        state: touch
-        mode: '0644'
-    - name: put pubkey
-      lineinfile:
-        path: "/home/ansible/.ssh/authorized_keys"
-        line: "{{ pubkey }}"
+  - name: importing the file contents to variable
+    slurp:
+      src: '/home/ansible/.ssh/id_rsa.pub'
+    register: bogus_content
+
+  - set_fact:
+      pubkey: "{{ bogus_content.content }}"
+
+  - name: "Ansible  Print a variable if defined"
+    debug:
+      msg: "The 'public key to deploy' variable value is {{ pubkey }}"
+    when: pubkey is defined
+  - name: make direcotry
+    file:
+      path: "/home/ansible/.ssh"
+      state: directory
+      mode: '0700'
+  - name: create empty file
+    file:
+      path: "/home/ansible/.ssh/authorized_keys"
+      state: touch
+      mode: '0644'
+  - name: put pubkey
+    lineinfile:
+      path: "/home/ansible/.ssh/authorized_keys"
+      line: "{{ pubkey }}"
