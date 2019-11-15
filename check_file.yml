@@ -23,8 +23,14 @@
       msg: "The 'public key to deploy' variable value is {{ pubkey }}"
     when: pubkey is defined
 
+  - name: "t a separator"
+    debug:
+      msg: "***************************************************************************"
+
+
+
   - name: "Ansible  Print a shell variable if defined"
     debug:
-      msg: "The 'cat public key to deploy' variable value is {{ catpubkey }}"
+      msg: "The 'cat public key to deploy' variable value is {{ catpubkey.stdout}}"
     when: catpubkey is defined
 
