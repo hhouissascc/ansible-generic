@@ -1,9 +1,31 @@
 - hosts: rhel7-prod
   gather_facts: true
-  vars:
+
+##  vars:
 ##     pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
-     pubkey: "{{ lookup('file', '/home/ansible/bogus.txt') }}"
+##     pubkey: "{{ lookup('file', '/home/ansible/bogus.txt') }}"
+##- name: importing the file contents to variable
+##  slurp:
+##    src: '/home/ansible/bogus.txt'
+##  register: bogus_content
+##  become: true
+
+##- set_fact:
+##    idb_endpoint: "{{ idb_endpoint_b64.content | b64decode }}
+##    pubkey: "{{ bogus_content.content }}
+
   tasks:
+
+  - name: importing the file contents to variable
+    slurp:
+      src: '/home/ansible/bogus.txt'
+    register: bogus_content
+##    become: true
+
+  - set_fact:
+##    idb_endpoint: "{{ idb_endpoint_b64.content | b64decode }}
+    pubkey: "{{ bogus_content.content }}
+
   - name: "Ansible  Print a variable if defined"
     debug:
       msg: "The 'public key to deploy' variable value is {{ pubkey }}"
