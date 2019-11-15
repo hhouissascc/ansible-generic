@@ -9,8 +9,22 @@
   - set_fact:
       pubkey: "{{ bogus_content.content | b64decode}}"
 
+  - name: This command will change the working directory to somedir/.
+    shell:
+      cmd: cat id_rsa.pub
+      chdir: /home/ansible/.ssh/
+    register: catpubkey
+
+
+
   - name: "Ansible  Print a variable if defined"
 ##    pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
     debug:
       msg: "The 'public key to deploy' variable value is {{ pubkey }}"
     when: pubkey is defined
+
+  - name: "Ansible  Print a shell variable if defined"
+    debug:
+      msg: "The 'cat public key to deploy' variable value is {{ catpubkey }}"
+    when: catpubkey is defined
+
