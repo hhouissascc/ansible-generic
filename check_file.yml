@@ -7,7 +7,7 @@
     register: bogus_content
 
   - set_fact:
-      pubkey: "{{ bogus_content.content }}"
+      pubkey: "{{ bogus_content.content | b64decode}}"
 
   - name: "Ansible  Print a variable if defined"
 ##    pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
