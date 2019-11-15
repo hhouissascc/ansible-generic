@@ -1,0 +1,18 @@
+- hosts: ubuntu-server
+##  become: yes
+  vars:
+    sudoers:
+      - ansible
+  tasks:
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+      when:
+        ansible_os_family=="RedHat"
+
+
+    - name: install ansible on remote linux server (all flavours)
+      pip:
+        name: ansible
+        extra_args: --user

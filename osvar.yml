@@ -1,0 +1,13 @@
+---
+- hosts: rhel7-prod
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - debug: 
+        msg: "{{ lookup('env','PATH') }} is an environment variable"
+      register: path
+
+
+    - debug:
+        msg: "this is the path found {{ path }}"

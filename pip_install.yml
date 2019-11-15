@@ -1,7 +1,7 @@
 - hosts: rhel7-prod
   become: yes
   roles:
-##    - { role: geerlingguy.repo-epel }
+    - { role: geerlingguy.repo-epel }
 ##    - { role: chinois.python3 }
 ##    - { role: chinois.common }
     - { role: geerlingguy.pip }
