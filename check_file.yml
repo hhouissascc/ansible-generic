@@ -1,7 +1,8 @@
 - hosts: rhel7-server
-  gather_facts: false
+  gather_facts: true
   vars:
-     pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+##     pubkey: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+     pubkey: "{{ lookup('file', '/home/ansible/bogus.txt') }}"
   tasks:
   - name: "Ansible  Print a variable if defined"
     debug:
