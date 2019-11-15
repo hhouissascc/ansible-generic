@@ -1,0 +1,13 @@
+---
+- name: configure / Update yum packages
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: configure / update apt packages
+  apt:
+    name: '*'
+    update_cache: yes
+  when: ansible_os_family == 'Debian'

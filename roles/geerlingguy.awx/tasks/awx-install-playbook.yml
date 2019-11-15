@@ -1,0 +1,30 @@
+---
+- debug:
+    msg: running additional playbook with vars postgres_data_dir {{ postgres_data_dir }} and dest dir  {{ awx_repo_dir }}
+
+- debug:
+    msg: check  {{ extra_path }} in path
+
+- name: add {{extra_path}} to path
+  lineinfile:
+    dest=/etc/environment
+    state=present
+    backrefs=yes
+    regexp='PATH=(["]*)((?!.*?{{extra_path}}).*?)(["]*)$'
+    line="PATH=\1\2:{{extra_path}}\3"
+
+- name: install docker-compose anyway
+  pip:
+    name: docker-compose
+
+- name: Run the AWX installation playbook.
+  command: "ansible-playbook -i inventory install.yml -e postgres_data_dir={{ postgres_data_dir }}"
+  args:
+    chdir: "{{ awx_repo_dir }}/installer"
+    creates: /etc/awx_playbook_complete
+
+- name: Create a file to mark whether this playbook has completed.
+  file:
+    path: /etc/awx_playbook_complete
+    state: touch
+  changed_when: False

@@ -1,0 +1,30 @@
+---
+python_tmp: /tmp
+python_url: https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tgz
+#python_dir: /tmp/Python-3.6.8
+python_dir: /tmp/Python-3.6.8/
+python_yum:
+   - wget
+   - zlib-devel
+   - bzip2-devel
+   - openssl-devel
+   - ncurses-devel
+   - sqlite-devel
+   - readline-devel
+   - tk-devel
+   - gcc
+   - make
+   - libtool
+   - automake
+
+python_apt:
+   - wget
+   - xz-utils
+   - build-essential
+   - libsqlite3-dev
+   - libreadline-dev
+   - libssl-dev
+   - openssl
+   - gcc
+   - make
+   - automake

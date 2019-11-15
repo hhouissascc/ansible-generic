@@ -1,0 +1,95 @@
+galaxy_info:
+  role_name: java
+  author: diodonfrost
+  company: diodonfrost
+  description: Ansible role for manage openjdk on a large number of os
+  license: license Apache
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: EL
+      versions:
+        - 8
+        - 7
+        - 6
+        - 5
+    - name: Fedora
+      versions:
+        - 29
+        - 28
+        - 27
+        - 26
+    - name: Debian
+      versions:
+        - buster
+        - stretch
+        - jessie
+        - wheezy
+        - squeeze
+    - name: Ubuntu
+      versions:
+        - bionic
+        - xenial
+        - trusty
+        - precise
+        - trusty
+    - name: Amazon
+      versions:
+        - 2017.12
+        - 2016.03
+        - 2013.09
+    - name: opensuse
+      versions:
+        - 13.2
+    - name: SLES
+      versions:
+        - 15
+        - 12
+        - 11
+    - name: ArchLinux
+      versions:
+        - any
+    - name: Alpine
+      versions:
+        - any
+    - name: Gentoo
+      versions:
+        - any
+    - name: ClearLinux
+      versions:
+        - any
+    - name: FreeBSD
+      versions:
+        - 11.2
+        - 10.4
+        - 10.3
+    - name: OpenBSD
+      versions:
+        - 6.0
+        - 6.4
+    - name: Solaris
+      versions:
+        - 10
+        - 11.0
+    - name: MacOSX
+      versions:
+        - 10.11
+        - 10.12
+        - 10.13
+    - name: Windows
+      versions:
+        - 2016
+        - 2012R2
+        - 2008R2
+
+  galaxy_tags:
+    - system
+    - packaging
+    - java
+    - oracle
+    - openjdk
+    - jre
+    - jdk
+
+dependencies: []
