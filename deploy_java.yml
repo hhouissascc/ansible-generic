@@ -1,0 +1,18 @@
+- hosts: dbservers
+  become: yes
+  tasks:
+    - name: installing repo for Java 8 in Ubuntu
+      apt_repository: repo='ppa:openjdk-r/ppa'
+      when: "ansible_os_family == 'Debian'"
+
+- hosts: dbservers
+  become: yes
+  roles:
+    - role: ansible-role-java
+      when: "ansible_os_family == 'Debian'"
+      java_packages:
+        - openjdk-8-jdk
+    - role: ansible-role-java
+      when: "ansible_os_family == 'RedHat'"
+      java_packages:
+        - java-1.8.0-openjdk
