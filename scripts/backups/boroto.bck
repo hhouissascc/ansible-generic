@@ -1,0 +1,62 @@
+import vm_automation
+#create esxi instance
+myserver = vm_automation.esxiServer("192.168.31.137", "root", "@ddVantage2019", "443", "first_log_rapid7.log")
+print myserver.connect()
+print myserver.getVersion()
+myserver.enumerateVms()
+
+for vm in myserver.vmList:
+    print vm.vmName
+    print vm.__dict__.keys()
+#rhel7-server
+#"Ubuntu-server-00
+#rhel7-prod
+#create empty list to store VMs
+print "Works from command line"
+vmnamelist=[]
+debians=[]
+reds=[]
+#create empty list of IPs
+vmips=[]
+print myserver.vmList
+print "this was myserver.vmList dict keys"
+"""
+for vm in myserver.vmList:
+    print vm.vmName
+    print vm.vmOS
+    if "Red Hat" in vm.vmOS:
+        reds.append(vm.vmName)
+    elif "Ubuntu" in vm.vmOS:
+        debians.append(vm.vmName)
+    #print vm.vmName.getVmIp()
+    #print vm
+    vmnamelist.append(vm.vmName)
+"""
+print "create vm Dictionary"
+    
+vmDic = {}
+for vm in myserver.vmList:
+    vmDic[vm.vmName] = vm
+    #vmDic['Ubuntu-server-00'].getVmIp()
+    #['payloadList', 'vmOS', 'procList', 'uploadDir', 'vmPassword', 'testVm', 'vmObject', 'server', 'snapshotList', 'vmIdentifier', 'vmIp', 'vmUsername', 'vmName', 'arch', 'revertSnapshots', 'resultDict']
+    #print type(vmDic[vm.vmName])
+    #print vmDic[vm.vmName].__dict__.keys()
+
+    print vmDic[vm.vmName].getVmIp()
+    print vmDic[vm.vmName].vmOS
+    print vmDic[vm.vmName].vmName
+    print vmDic[vm.vmName].vmUsername
+    #print vmDic[vm.vmName].resultDict
+    vmips.append(vmDic[vm.vmName].getVmIp())
+    #print vmDic[vm.vmName].getVmByName()
+
+print "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
+
+print "redservers found"
+print reds
+print "debians found"
+print debians
+print "vmnamelist"
+print vmnamelist
+print "vm ips list"
+print vmips

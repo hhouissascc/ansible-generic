@@ -1,16 +1,18 @@
 ---
-- hosts: rhel7-prod
+- hosts: all
   gather_facts: true
 
+  vars:
+     pubkey: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+       #tasks:
+          #- name: importing the file contents to variable
+          #slurp:
+          #src: '/home/ansible/.ssh/id_rsa.pub'
+          #register: bogus_content
+
+     #- set_fact:
+     #pubkey: "{{ bogus_content.content }}"
   tasks:
-  - name: importing the file contents to variable
-    slurp:
-      src: '/home/ansible/.ssh/id_rsa.pub'
-    register: bogus_content
-
-  - set_fact:
-      pubkey: "{{ bogus_content.content }}"
-
   - name: "Ansible  Print a variable if defined"
     debug:
       msg: "The 'public key to deploy' variable value is {{ pubkey }}"

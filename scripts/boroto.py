@@ -1,0 +1,88 @@
+import vm_automation
+#create esxi instance
+myserver = vm_automation.esxiServer("192.168.31.137", "root", "@ddVantage2019", "443", "first_log_rapid7.log")
+print myserver.connect()
+print myserver.getVersion()
+myserver.enumerateVms()
+
+mainus={"all": {"children": ["ungrouped","redservers","linxy", "winservers"],"hosts": [],"vars": {}}} #put ALL predefined groups here. Update later with meta and other host groups details based on script findings
+#"_meta": {metas}, "all": {alles}, "linxy": {debianss}, "redservers": {redss}, "winservers": {winss}, "ungrouped": {ungroupss}}
+#prepare mainus
+metas={} #is the value of _meta.
+hostvars={} # is the content of metas: metas.update("hostvars": hostvars)
+#alles={"children": [], "vars": {}} #is the VALUE of all
+debianss={"children": [], "vars": {}} #is the value of linxy
+redss= {"children": [], "vars": {}} #is the Value of redservers
+ungroupss = {"children": [], "vars": {}}#is the Value ofungrouped
+winss = {"children": [], "vars": {}}#is the Value of winservers
+
+#prepare _meta hostvars
+hostvarius={}
+hostvarius_element= {}   #{"{}".format(vm.VmName): "{}".format(hostvaius_element_details)}
+hostvaius_element_details= {"ansible_user": "ansible"}   #{"ansible_host": "192.168.31.142",  }
+#prepare the non _meta
+#prepare the hosts list value inside each non _meta
+reds=[]
+debians=[]
+wins=[]
+ungrouped_hosts=[]
+groups=["redservers", "linxy", "windows", "ungrouped"]
+
+#create empty list of IPs
+vmips=[]
+print myserver.vmList
+print "this was myserver.vmList dict keys"
+
+vmDic = {}
+for vm in myserver.vmList:
+    vmDic[vm.vmName] = vm
+    vmips.append(vmDic[vm.vmName].getVmIp())
+    print vmDic[vm.vmName].getVmIp()
+    print vmDic[vm.vmName].vmOS
+    print vmDic[vm.vmName].vmName
+
+    new_sub_meta={"ansible_user": "ansible"}
+    ipoun = vmDic[vm.vmName].getVmIp()
+    new_sub_meta.update({"ansible_host": vmDic[vm.vmName].getVmIp()})
+    hostvars.update({vmDic[vm.vmName].vmName: new_sub_meta})
+    #non_meta.
+    if "Red Hat" in vmDic[vm.vmName].vmOS:
+        reds.append(vmDic[vm.vmName].vmName)
+    elif "Ubuntu" in vmDic[vm.vmName].vmOS:
+        debians.append(vmDic[vm.vmName].vmName)
+    elif "Windows" in vmDic[vm.vmName].vmOS:
+        wins.append(vmDic[vm.vmName].vmName)
+    else:
+        ungrouped_hosts.append(vmDic[vm.vmName].vmName)
+
+print "redhat servers list"
+print reds
+print ""
+
+debianss.update({"hosts": debians})
+mainus.update({"linxy": debianss})
+print "mainus now after linxy update"
+print mainus
+print ""
+redss.update({"hosts": reds})
+mainus.update({"redservers": redss})
+print "mainus now after redservers update"
+print mainus
+print ""
+
+winss.update({"hosts": wins})
+mainus.update({"winss": winss})
+
+ungroupss.update({"hosts": ungrouped_hosts})
+mainus.update({"ungrouped": ungroupss})
+
+print "hostvars now is {}".format(hostvars)
+print ""
+
+print "updating mainus with meta"
+#metas.update({"hostvars": hostvars})
+metastase = {}
+metastase.update({"hostvars": hostvars})
+mainus.update({"_meta": metastase})
+print ""
+print mainus

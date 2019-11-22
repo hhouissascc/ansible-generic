@@ -1,4 +1,4 @@
-- hosts: rhel7-prod
+- hosts: all 
   tasks:
     - name: test connection
       ping:

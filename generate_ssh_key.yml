@@ -10,12 +10,33 @@
 
     - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa)
       openssh_keypair:
-        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa_auto"
+        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa"
         owner: "{{ ansible_user_id }}"
         group: wheel
+      when:
+        ansible_os_family=="RedHat"
 
     - name: Fix owner of the generated pub key
       file:
-        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa_auto.pub"
+        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa.pub"
         owner: "{{ ansible_user_id }}"
         group: wheel
+      when:
+        ansible_os_family=="RedHat"
+
+    - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa)
+      openssh_keypair:
+        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa"
+        owner: "{{ ansible_user_id }}"
+        group: sudo
+      when:
+        ansible_os_family=="Debian"
+
+    - name: Fix owner of the generated pub key
+      file:
+        path: "/home/{{ ansible_user_id }}/.ssh/id_rsa.pub"
+        owner: "{{ ansible_user_id }}"
+        group: sudo
+      when:
+        ansible_os_family=="Debian"
+

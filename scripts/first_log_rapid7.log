@@ -1,0 +1,6 @@
+serverlog:[2019-11-20 17:47:44.746531] FINDING SNAPSHOTS FOR Ubuntu-server-00
+serverlog:[2019-11-20 17:48:50.766636] TAKING SNAPSHOT new_snapshot ON Ubuntu-server-00
+serverlog:[2019-11-20 17:48:55.942451] DONE
+serverlog:[2019-11-20 17:49:53.935782] FINDING SNAPSHOTS FOR Ubuntu-server-00
+serverlog:[2019-11-20 17:49:53.957227] DELETING SNAPSHOT new_snapshot FROM Ubuntu-server-00
+serverlog:[2019-11-20 17:49:58.989784] DONE
