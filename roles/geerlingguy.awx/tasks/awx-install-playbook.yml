@@ -17,6 +17,16 @@
   pip:
     name: docker-compose
 
+- name: uninstall more-itertools
+  pip:
+    name: more-itertools
+    state: absent
+
+- name: install python2 supported version of more-itertools
+  pip:
+    name: more-itertools
+    version: "5.0.0"
+
 - name: Run the AWX installation playbook.
   command: "ansible-playbook -i inventory install.yml -e postgres_data_dir={{ postgres_data_dir }}"
   args:
