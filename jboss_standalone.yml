@@ -1,0 +1,5 @@
+- hosts: all
+  become: yes
+  roles:
+     - role: ansible-role-jboss
+       jboss_config: standalone-ha.xml

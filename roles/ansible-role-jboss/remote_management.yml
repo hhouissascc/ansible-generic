@@ -1,0 +1,68 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  environment:
+    JBOSS_MANAGEMENT_USER: ansible
+    JBOSS_MANAGEMENT_PASSWORD: ansible
+    JBOSS_MANAGEMENT_HOST: "10.255.0.10"
+    JBOSS_MANAGEMENT_PORT: 9990
+  tasks:
+    - name: jboss-py
+      pip:
+        name: https://github.com/jairojunior/jboss-py/archive/master.zip
+
+    - name: Configure datasource
+      jboss_resource:
+        name: "/subsystem=datasources/data-source=DemoDS"
+        state: present
+        attributes:
+          driver-name: h2
+          connection-url: "jdbc:h2:mem:demo;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+          jndi-name: "java:jboss/datasources/DemoDS"
+          user-name: sa
+          password: sa
+          min-pool-size: 20
+          max-pool-size: 40
+      register: result
+
+    - debug:
+        msg: "{{ result }}"
+
+    - name: Download cluster-demo
+      get_url:
+        url: https://github.com/jairojunior/wildfly-ha-tcpgossip-vagrant-puppet/raw/master/cluster-demo.war
+        dest: /tmp/cluster-demo.war
+        checksum: sha256:6d837d89d848660067bc6bc6d97032f66179141d736e6aacebd394578a87f61c
+
+    - name: Deploy cluster-demo
+      jboss_deployment:
+        name: cluster-demo.war
+        state: present
+        src: /tmp/cluster-demo.war
+      register: deploy
+
+    - name: Download hawt.io
+      maven_artifact:
+        group_id: io.hawt
+        artifact_id: hawtio-web
+        version: 1.5.0
+        extension: war
+        dest: /opt/hawtio.war
+
+    - name: Deploy hawt.io
+      jboss_deployment:
+        name: hawtio.war
+        state: present
+        src: /opt/hawtio.war
+
+    - debug:
+        msg: "{{  deploy }}"
+
+    - name: Undeploy hawt.io
+      jboss_deployment:
+        name: hawtio.war
+        state: absent
+      register: undeploy
+
+    - debug:
+        msg: "{{  undeploy }}"
